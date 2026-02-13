@@ -226,8 +226,8 @@ const AddTask = () => {
                                     handleChange({ target: { name: 'type', value: type.value } });
                                 }}
                                 className={`p-3 rounded-xl border-2 text-center transition-all ${formData.type === type.value
-                                        ? `${type.color} border-current`
-                                        : 'bg-gray-50 border-transparent hover:border-gray-200'
+                                    ? `${type.color} border-current`
+                                    : 'bg-gray-50 border-transparent hover:border-gray-200'
                                     }`}
                             >
                                 <div className="text-2xl mb-1">{type.icon}</div>
@@ -268,8 +268,8 @@ const AddTask = () => {
                             <label
                                 key={schedule.value}
                                 className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${formData.scheduleType === schedule.value
-                                        ? 'border-primary-500 bg-primary-50'
-                                        : 'border-gray-100 hover:border-gray-200'
+                                    ? 'border-blue-800 bg-blue-800 dark:bg-white'
+                                    : 'border-gray-100 hover:border-gray-200'
                                     }`}
                             >
                                 <input
@@ -281,7 +281,7 @@ const AddTask = () => {
                                     className="sr-only"
                                 />
                                 <span className="text-xl">{schedule.icon}</span>
-                                <span className="font-medium text-gray-900">{schedule.label}</span>
+                                <span className={`font-medium text-primary-500`}>{schedule.label}</span>
                                 {formData.scheduleType === schedule.value && (
                                     <span className="ml-auto text-primary-500">✓</span>
                                 )}
@@ -300,8 +300,8 @@ const AddTask = () => {
                                         type="button"
                                         onClick={() => toggleDay(day.value)}
                                         className={`w-10 h-10 rounded-full text-sm font-medium transition-all ${formData.selectedDays.includes(day.value)
-                                                ? 'bg-primary-500 text-white'
-                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                            ? 'bg-primary-500 text-white'
+                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                             }`}
                                     >
                                         {day.short}
@@ -386,8 +386,8 @@ const AddTask = () => {
                             <label
                                 key={notif.value}
                                 className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${formData.notificationType === notif.value
-                                        ? 'border-primary-500 bg-primary-50'
-                                        : 'border-gray-100 hover:border-gray-200'
+                                    ? 'border-blue-800 bg-blue-800 dark:bg-white'
+                                    : 'border-gray-100 hover:border-gray-200'
                                     }`}
                             >
                                 <input
@@ -400,9 +400,12 @@ const AddTask = () => {
                                 />
                                 <span className="text-xl">{notif.icon}</span>
                                 <div className="flex-1">
-                                    <div className="font-medium text-gray-900">{notif.label}</div>
-                                    <div className="text-xs text-gray-500">{notif.desc}</div>
+                                    <div className={`font-medium text-primary-500`}>{notif.label}</div>
+                                    <div className={`text-xs text-primary-500`}>{notif.desc}</div>
                                 </div>
+                                {formData.notificationType === notif.value && (
+                                    <span className="text-primary-500">✓</span>
+                                )}
                             </label>
                         ))}
                     </div>

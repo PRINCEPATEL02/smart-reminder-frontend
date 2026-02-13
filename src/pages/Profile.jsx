@@ -109,15 +109,13 @@ const Profile = () => {
 
     return (
         <div className="max-w-2xl mx-auto pb-20">
-            <div className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-6 mb-6 shadow-lg">
-                <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/30">
-                        <FaUser className="text-white text-lg" />
-                    </div>
-                    <div>
-                        <h2 className="text-2xl font-bold text-primary-700 dark:text-white">Profile Settings</h2>
-                        <p className="text-sm font-medium text-primary-500 dark:text-gray-400">Manage your account preferences</p>
-                    </div>
+            <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/30">
+                    <FaUser className="text-white text-lg" />
+                </div>
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-900">Profile Settings</h2>
+                    <p className="text-sm text-gray-500">Manage your account preferences</p>
                 </div>
             </div>
 
@@ -128,12 +126,12 @@ const Profile = () => {
                         <div className="w-8 h-8 rounded-lg bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
                             <FaUser className="text-primary-600 dark:text-primary-400 text-sm" />
                         </div>
-                        <h3 className="text-lg font-semibold text-black dark:text-white">Basic Information</h3>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Basic Information</h3>
                     </div>
 
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                                 Username
                             </label>
                             <div className="relative">
@@ -152,7 +150,7 @@ const Profile = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                                 Email Address
                             </label>
                             <div className="relative">
@@ -178,13 +176,13 @@ const Profile = () => {
                         <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
                             <FaSun className="text-indigo-600 dark:text-indigo-400 text-sm" />
                         </div>
-                        <h3 className="text-lg font-semibold text-black dark:text-white">App Settings</h3>
+                        <h3 className="text-lg font-semibold text-white">App Settings</h3>
                     </div>
 
                     <div className="space-y-4">
                         {/* Theme Toggle */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">
+                            <label className="block text-lg font-semibold text-white mb-2">
                                 Appearance
                             </label>
                             <div className="grid grid-cols-2 gap-3">
@@ -194,13 +192,13 @@ const Profile = () => {
                                         handleChange({ target: { name: 'theme', value: 'light' } });
                                         setSaved(false);
                                     }}
-                                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 transition-all ${formData.theme === 'light'
-                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
-                                        : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500'
+                                    className={`flex items-center justify-center gap-2 px-4 py-4 rounded-xl border-2 transition-all ${formData.theme === 'light'
+                                        ? 'border-primary-500 bg-primary-50 text-primary-600'
+                                        : 'border-gray-200 text-gray-600 hover:border-gray-300'
                                         }`}
                                 >
                                     <FaSun className="text-lg" />
-                                    <span className="font-medium text-gray-900 dark:text-white">Light</span>
+                                    <span className="font-semibold text-lg">Light</span>
                                 </button>
                                 <button
                                     type="button"
@@ -208,20 +206,20 @@ const Profile = () => {
                                         handleChange({ target: { name: 'theme', value: 'dark' } });
                                         setSaved(false);
                                     }}
-                                    className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 transition-all ${formData.theme === 'dark'
-                                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
-                                        : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500'
+                                    className={`flex items-center justify-center gap-2 px-4 py-4 rounded-xl border-2 transition-all ${formData.theme === 'dark'
+                                        ? 'border-primary-500 bg-primary-50 text-primary-600'
+                                        : 'border-gray-200 text-gray-600 hover:border-gray-300'
                                         }`}
                                 >
                                     <FaMoon className="text-lg" />
-                                    <span className="font-medium text-gray-900 dark:text-white">Dark</span>
+                                    <span className="font-semibold text-lg">Dark</span>
                                 </button>
                             </div>
                         </div>
 
                         {/* Timezone */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                                 Timezone
                             </label>
                             <select
@@ -231,7 +229,7 @@ const Profile = () => {
                                 className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white transition-all appearance-none cursor-pointer"
                             >
                                 {timezones.map(tz => (
-                                    <option key={tz.value} value={tz.value} className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                    <option key={tz.value} value={tz.value} className="bg-white dark:bg-gray-700">
                                         {tz.label}
                                     </option>
                                 ))}
@@ -243,7 +241,7 @@ const Profile = () => {
                             <div className="flex items-center justify-between mb-3">
                                 <div className="flex items-center gap-2">
                                     <FaClock className="text-gray-400" />
-                                    <label className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                                         Sleep Mode
                                     </label>
                                 </div>
@@ -266,7 +264,7 @@ const Profile = () => {
                             {formData.sleepMode.enabled && (
                                 <div className="grid grid-cols-2 gap-3 pl-9">
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-900 dark:text-gray-300 mb-1">
+                                        <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
                                             Start Time
                                         </label>
                                         <input
@@ -278,7 +276,7 @@ const Profile = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-900 dark:text-gray-300 mb-1">
+                                        <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
                                             End Time
                                         </label>
                                         <input
@@ -301,12 +299,12 @@ const Profile = () => {
                         <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
                             <FaUserNurse className="text-emerald-600 dark:text-emerald-400 text-sm" />
                         </div>
-                        <h3 className="text-lg font-semibold text-black dark:text-white">Caregiver Information</h3>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Caregiver Information</h3>
                     </div>
 
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                                 Caregiver Name
                             </label>
                             <div className="relative">
@@ -325,7 +323,7 @@ const Profile = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                                 Contact Method
                             </label>
                             <select
@@ -334,13 +332,13 @@ const Profile = () => {
                                 onChange={handleChange}
                                 className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-white transition-all"
                             >
-                                <option value="email" className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white">Email</option>
-                                <option value="sms" className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white">SMS</option>
+                                <option value="email" className="bg-white dark:bg-gray-700">Email</option>
+                                <option value="sms" className="bg-white dark:bg-gray-700">SMS</option>
                             </select>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-1.5">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                                 {formData.caregiver.contactMethod === 'email' ? 'Email Address' : 'Phone Number'}
                             </label>
                             <div className="relative">

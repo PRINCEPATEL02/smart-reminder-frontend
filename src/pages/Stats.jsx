@@ -90,10 +90,10 @@ const Stats = () => {
         <div>
             {/* Header */}
             <div className="flex items-center gap-3 mb-6">
-                <Link to="/" className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors dark:bg-gray-700">
-                    <FaArrowLeft className="text-primary-700 dark:text-white" />
+                <Link to="/" className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors">
+                    <FaArrowLeft className="text-gray-600" />
                 </Link>
-                <h1 className="text-xl font-bold text-primary-700 dark:text-white">Your Statistics</h1>
+                <h1 className="text-xl font-bold text-gray-900">Your Statistics</h1>
             </div>
 
             {/* Weekly Overview */}
@@ -102,7 +102,7 @@ const Stats = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="card mb-6"
             >
-                <h3 className="font-semibold text-primary-700 dark:text-white mb-4 flex items-center gap-2">
+                <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <FaCalendar className="text-primary-500" />
                     This Week
                 </h3>
@@ -111,8 +111,8 @@ const Stats = () => {
                         <div
                             key={idx}
                             className={`text-center p-2 rounded-xl ${day.isToday
-                                ? 'bg-primary-500 text-white'
-                                : 'bg-gray-50 text-primary-700 dark:text-white'
+                                    ? 'bg-primary-500 text-white'
+                                    : 'bg-gray-50 text-gray-600'
                                 }`}
                         >
                             <div className="text-xs font-medium mb-1">{day.dayName}</div>
@@ -161,7 +161,7 @@ const Stats = () => {
                 >
                     <FaClock className="text-xl mb-2 text-primary-500" />
                     <div className="text-2xl font-bold">{stats.totalTasks}</div>
-                    <div className="text-sm text-primary-500 dark:text-gray-300">Active Reminders</div>
+                    <div className="text-sm text-gray-500">Active Reminders</div>
                 </motion.div>
 
                 <motion.div
@@ -177,7 +177,7 @@ const Stats = () => {
                         </div>
                     </div>
                     <div className="text-2xl font-bold">{getCompletionRate()}%</div>
-                    <div className="text-sm text-primary-500 dark:text-gray-300">Completion Rate</div>
+                    <div className="text-sm text-gray-500">Completion Rate</div>
                 </motion.div>
             </div>
 
@@ -188,16 +188,16 @@ const Stats = () => {
                 transition={{ delay: 0.3 }}
                 className="card mb-6"
             >
-                <h3 className="font-semibold text-primary-700 dark:text-white mb-4">Reminder Types</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">Reminder Types</h3>
                 {typeDistribution.length === 0 ? (
-                    <p className="text-primary-500 dark:text-gray-300 text-center py-4">No reminders yet</p>
+                    <p className="text-gray-500 text-center py-4">No reminders yet</p>
                 ) : (
                     <div className="space-y-4">
                         {typeDistribution.map((item, idx) => (
                             <div key={idx}>
                                 <div className="flex items-center justify-between mb-1">
-                                    <span className="text-sm font-medium text-primary-700 dark:text-white">{item.type}</span>
-                                    <span className="text-sm text-primary-500 dark:text-gray-300">{item.count} ({item.percentage}%)</span>
+                                    <span className="text-sm font-medium text-gray-700">{item.type}</span>
+                                    <span className="text-sm text-gray-500">{item.count} ({item.percentage}%)</span>
                                 </div>
                                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                                     <motion.div
@@ -220,7 +220,7 @@ const Stats = () => {
                 transition={{ delay: 0.4 }}
                 className="card"
             >
-                <h3 className="font-semibold text-primary-700 dark:text-white mb-4">Quick Actions</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">Quick Actions</h3>
                 <div className="space-y-3">
                     <Link
                         to="/add-task"
@@ -230,8 +230,8 @@ const Stats = () => {
                             <FaCheckCircle />
                         </div>
                         <div className="flex-1">
-                            <div className="font-medium text-primary-700 dark:text-white">Add New Reminder</div>
-                            <div className="text-sm text-primary-500 dark:text-gray-300">Create a new reminder</div>
+                            <div className="font-medium text-gray-900">Add New Reminder</div>
+                            <div className="text-sm text-gray-500">Create a new reminder</div>
                         </div>
                     </Link>
                 </div>
