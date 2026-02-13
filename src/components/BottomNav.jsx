@@ -1,12 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaCalendarAlt, FaChartBar, FaBell, FaUser } from 'react-icons/fa';
-
-const navItems = [
-    { path: '/', label: 'Today', icon: FaHome },
-    { path: '/stats', label: 'Stats', icon: FaChartBar },
-    { path: '/profile', label: 'Profile', icon: FaUser },
-    { path: '/add-task', label: 'Add', icon: FaBell }, // Hidden visually but needed for mobile nav
-];
+import { FaHome, FaChartBar, FaUser } from 'react-icons/fa';
 
 const BottomNav = () => {
     return (
@@ -41,9 +34,6 @@ const BottomNav = () => {
                 <FaUser className="bottom-nav-icon" />
                 <span className="bottom-nav-label">Profile</span>
             </NavLink>
-
-            {/* Spacer for FAB */}
-            <div className="w-14" />
         </nav>
     );
 };

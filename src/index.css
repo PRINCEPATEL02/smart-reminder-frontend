@@ -227,15 +227,25 @@ html.dark {
   }
 
   body {
-    @apply bg-gray-50 text-gray-900 font-sans antialiased;
+    @apply bg-gray-50 text-primary-700 font-sans antialiased;
     min-height: 100vh;
     overflow-x: hidden;
+  }
+
+  /* Dark mode body text */
+  .dark body {
+    @apply bg-gray-900 text-white;
   }
 
   /* Mobile-first container */
   #root {
     @apply w-full max-w-[480px] mx-auto bg-gray-50 min-h-screen shadow-2xl;
     box-shadow: var(--shadow-2xl);
+  }
+
+  /* Dark mode container */
+  .dark #root {
+    @apply bg-gray-900;
   }
 
   /* Input styles */
@@ -256,6 +266,22 @@ html.dark {
     background-repeat: no-repeat;
     background-size: 20px;
     padding-right: 40px;
+  }
+
+  /* Dark mode select */
+  .dark select {
+    @apply bg-gray-700 text-white;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  }
+
+  /* Dark mode options */
+  .dark select option {
+    @apply bg-gray-700 text-white;
+  }
+
+  /* Dark mode input placeholder */
+  .dark input::placeholder {
+    @apply text-gray-400;
   }
 
   /* Label styles */
@@ -369,7 +395,7 @@ html.dark {
     padding-bottom: env(safe-area-inset-bottom);
     padding-top: env(safe-area-inset-top);
     @apply px-4;
-    @apply flex items-center justify-around;
+    @apply flex items-center justify-evenly;
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
     z-index: 50;
   }
@@ -377,12 +403,11 @@ html.dark {
   .bottom-nav-item {
     @apply flex flex-col items-center justify-center p-2 rounded-xl;
     @apply text-gray-400 transition-all duration-200;
+    flex: 1;
 
     &:hover {
       color: var(--color-primary-500);
     }
-
-    min-width: 64px;
   }
 
   .bottom-nav-item.active {
