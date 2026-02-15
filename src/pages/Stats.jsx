@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaCalendar, FaCheckCircle, FaClock, FaFire } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
+import { format } from 'date-fns';
 import api from '../utils/api';
 
 const Stats = () => {
     const [stats, setStats] = useState({
-        totalTasks: 0,
+        totalActiveTasks: 0,
         completedToday: 0,
         streak: 0,
+        completionRate: 0,
         weeklyProgress: [],
     });
     const [loading, setLoading] = useState(true);
@@ -18,22 +19,13 @@ const Stats = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await api.get('/tasks');
-                setTasks(data);
+                // Fetch all tasks for type distribution
+                const tasksRes = await api.get('/tasks');
+                setTasks(tasksRes.data);
 
-                // Calculate stats
-                const today = new Date();
-                const todayCompleted = data.filter(task => {
-                    // This would need completion history - simplified for now
-                    return false;
-                }).length;
-
-                setStats({
-                    totalTasks: data.filter(t => t.status === 'Active').length,
-                    completedToday: 0,
-                    streak: 0, // Would calculate from history
-                    weeklyProgress: getWeeklyProgress(data),
-                });
+                // Fetch stats from new endpoint
+                const statsRes = await api.get('/tasks/stats');
+                setStats(statsRes.data);
             } catch (error) {
                 console.error('Failed to fetch stats:', error);
             } finally {
@@ -42,27 +34,6 @@ const Stats = () => {
         };
         fetchData();
     }, []);
-
-    const getWeeklyProgress = (tasks) => {
-        const today = new Date();
-        const weekStart = startOfWeek(today);
-        const weekEnd = endOfWeek(today);
-        const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
-
-        return days.map(day => ({
-            date: day,
-            dayName: format(day, 'EEE'),
-            dayNum: format(day, 'd'),
-            isToday: isSameDay(day, today),
-            completed: Math.floor(Math.random() * tasks.length), // Mock data - would come from history
-            total: tasks.length,
-        }));
-    };
-
-    const getCompletionRate = () => {
-        if (stats.totalTasks === 0) return 0;
-        return Math.round((stats.completedToday / stats.totalTasks) * 100);
-    };
 
     const getTypeDistribution = () => {
         const types = {};
@@ -111,8 +82,8 @@ const Stats = () => {
                         <div
                             key={idx}
                             className={`text-center p-2 rounded-xl ${day.isToday
-                                    ? 'bg-primary-500 text-white'
-                                    : 'bg-gray-50 text-gray-600'
+                                ? 'bg-primary-500 text-white'
+                                : 'bg-gray-50 text-gray-600'
                                 }`}
                         >
                             <div className="text-xs font-medium mb-1">{day.dayName}</div>
@@ -160,7 +131,7 @@ const Stats = () => {
                     className="card"
                 >
                     <FaClock className="text-xl mb-2 text-primary-500" />
-                    <div className="text-2xl font-bold">{stats.totalTasks}</div>
+                    <div className="text-2xl font-bold">{stats.totalActiveTasks}</div>
                     <div className="text-sm text-gray-500">Active Reminders</div>
                 </motion.div>
 
@@ -170,13 +141,8 @@ const Stats = () => {
                     transition={{ delay: 0.25 }}
                     className="card"
                 >
-                    <div className="relative mb-2">
-                        <FaClock className="text-xl text-primary-500" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-xs font-bold text-primary-500">{getCompletionRate()}%</span>
-                        </div>
-                    </div>
-                    <div className="text-2xl font-bold">{getCompletionRate()}%</div>
+                    <FaCheckCircle className="text-xl mb-2 text-primary-500" />
+                    <div className="text-2xl font-bold">{stats.completionRate}%</div>
                     <div className="text-sm text-gray-500">Completion Rate</div>
                 </motion.div>
             </div>
