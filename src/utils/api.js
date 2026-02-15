@@ -1,13 +1,15 @@
 import axios from 'axios';
 
-// Use VITE_API_URL environment variable - always points to Render backend
-// No localhost, no fallback - forces production URL only
+// Use Render backend URL directly - no localhost
+// Includes /api since backend routes are under /api/*
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-    withCredentials: true,
+    baseURL: "https://smart-reminder-backend-cg3w.onrender.com/api",
+    headers: {
+        "Content-Type": "application/json"
+    }
 });
 
-// Add a request interceptor to add the token
+// Add token to requests
 api.interceptors.request.use(
     (config) => {
         const user = JSON.parse(localStorage.getItem('smartReminderUser'));
