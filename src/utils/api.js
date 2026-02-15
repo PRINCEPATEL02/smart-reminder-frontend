@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Use Render backend URL directly - no localhost
-// Includes /api since backend routes are under /api/*
+// Use Render backend URL directly - no localhost, no withCredentials
+// Backend routes are under /api/*, so we include /api in baseURL
 const api = axios.create({
     baseURL: "https://smart-reminder-backend-cg3w.onrender.com/api",
     headers: {
