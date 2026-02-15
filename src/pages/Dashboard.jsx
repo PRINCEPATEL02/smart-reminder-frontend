@@ -119,10 +119,10 @@ const Dashboard = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="mb-6"
             >
-                <h2 className="text-2xl font-bold text-primary-700 dark:text-white">
+                <h2 className="text-2xl font-bold text-gray-900">
                     Good {new Date().getHours() < 12 ? 'Morning' : new Date().getHours() < 18 ? 'Afternoon' : 'Evening'}, {user?.username?.split(' ')[0]}! 👋
                 </h2>
-                <p className="text-primary-500 dark:text-gray-300 mt-1">
+                <p className="text-gray-500 mt-1">
                     {format(new Date(), 'EEEE, MMMM d')}
                 </p>
             </motion.div>
@@ -148,7 +148,7 @@ const Dashboard = () => {
 
             {/* Filter Section */}
             <div className="section-header">
-                <h3 className="text-lg font-semibold">Your Reminders</h3>
+                <h3 className="text-2xl font-bold text-gray-900">Your Reminders</h3>
                 <div className="relative">
                     <button
                         onClick={() => setFilterMenuOpen(!filterMenuOpen)}
@@ -172,7 +172,7 @@ const Dashboard = () => {
                                             setFilter(type);
                                             setFilterMenuOpen(false);
                                         }}
-                                        className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${filter === type ? 'text-primary-500 font-medium' : 'text-primary-700 dark:text-white'}`}
+                                        className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${filter === type ? 'text-primary-500 font-medium' : 'text-gray-700'}`}
                                     >
                                         {type === 'all' ? 'All Types' : type}
                                     </button>
@@ -191,8 +191,8 @@ const Dashboard = () => {
                     className="card text-center py-12"
                 >
                     <div className="text-6xl mb-4">🔔</div>
-                    <h3 className="text-lg font-semibold text-primary-700 dark:text-white mb-2">No reminders yet</h3>
-                    <p className="text-primary-500 dark:text-gray-300 mb-6">Start adding reminders to stay on track!</p>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No reminders yet</h3>
+                    <p className="text-gray-500 mb-6">Start adding reminders to stay on track!</p>
                     <Link to="/add-task" className="btn btn-primary">
                         Add Your First Reminder
                     </Link>

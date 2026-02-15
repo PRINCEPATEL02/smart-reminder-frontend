@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', 'icons/*.svg'],
+      includeAssets: ['favicon.svg', 'favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg', 'icons/*.svg', 'icons/*.png'],
       manifest: {
         name: 'Smart Reminder App',
         short_name: 'SmartRemind',
@@ -39,79 +39,23 @@ export default defineConfig({
           }
         ],
         icons: [
-          // App Icons
           {
-            src: 'icons/app_icon_512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: 'icons/pwa_192.png',
+            src: 'icons/icon-192.svg',
             sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Play Store
-          {
-            src: 'icons/playstore_1024.png',
-            sizes: '1024x1024',
-            type: 'image/png',
-            purpose: 'any maskable'
-          },
-          // PWA Icon
-          {
-            src: 'icons/pwa_192.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Notification Icon
-          {
-            src: 'icons/notification_96.png',
-            sizes: '96x96',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Website Icons
-          {
-            src: 'icons/navbar_40.png',
-            sizes: '40x40',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: 'icons/sidebar_48.png',
-            sizes: '48x48',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Favicon
-          {
-            src: 'icons/favicon_32.png',
-            sizes: '32x32',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: 'icons/favicon_16.png',
-            sizes: '16x16',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          // Apple Touch Icon (SVG)
-          {
-            src: 'icons/badge-72.svg',
-            sizes: '72x72',
             type: 'image/svg+xml',
-            purpose: 'any maskable'
+            purpose: 'any'
           },
-          // App Badge Icon
           {
-            src: 'icons/pwa_192.png',
-            sizes: '192x192',
+            src: 'icons/icon-192.svg',
+            sizes: '512x512',
+            type: 'image/svg+xml',
+            purpose: 'any'
+          },
+          {
+            src: 'apple-touch-icon.png',
+            sizes: '180x180',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'any'
           }
         ],
       },

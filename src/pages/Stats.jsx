@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaCalendar, FaCheckCircle, FaClock, FaFire } from 'react-icons/fa';
 import { motion } from 'framer-motion';
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
+import { format } from 'date-fns';
 import api from '../utils/api';
 
 const Stats = () => {
     const [stats, setStats] = useState({
-        totalTasks: 0,
+        totalActiveTasks: 0,
         completedToday: 0,
         streak: 0,
+        completionRate: 0,
         weeklyProgress: [],
     });
     const [loading, setLoading] = useState(true);
@@ -18,22 +19,13 @@ const Stats = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await api.get('/tasks');
-                setTasks(data);
+                // Fetch all tasks for type distribution
+                const tasksRes = await api.get('/tasks');
+                setTasks(tasksRes.data);
 
-                // Calculate stats
-                const today = new Date();
-                const todayCompleted = data.filter(task => {
-                    // This would need completion history - simplified for now
-                    return false;
-                }).length;
-
-                setStats({
-                    totalTasks: data.filter(t => t.status === 'Active').length,
-                    completedToday: 0,
-                    streak: 0, // Would calculate from history
-                    weeklyProgress: getWeeklyProgress(data),
-                });
+                // Fetch stats from new endpoint
+                const statsRes = await api.get('/tasks/stats');
+                setStats(statsRes.data);
             } catch (error) {
                 console.error('Failed to fetch stats:', error);
             } finally {
@@ -42,27 +34,6 @@ const Stats = () => {
         };
         fetchData();
     }, []);
-
-    const getWeeklyProgress = (tasks) => {
-        const today = new Date();
-        const weekStart = startOfWeek(today);
-        const weekEnd = endOfWeek(today);
-        const days = eachDayOfInterval({ start: weekStart, end: weekEnd });
-
-        return days.map(day => ({
-            date: day,
-            dayName: format(day, 'EEE'),
-            dayNum: format(day, 'd'),
-            isToday: isSameDay(day, today),
-            completed: Math.floor(Math.random() * tasks.length), // Mock data - would come from history
-            total: tasks.length,
-        }));
-    };
-
-    const getCompletionRate = () => {
-        if (stats.totalTasks === 0) return 0;
-        return Math.round((stats.completedToday / stats.totalTasks) * 100);
-    };
 
     const getTypeDistribution = () => {
         const types = {};
@@ -90,10 +61,10 @@ const Stats = () => {
         <div>
             {/* Header */}
             <div className="flex items-center gap-3 mb-6">
-                <Link to="/" className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors dark:bg-gray-700">
-                    <FaArrowLeft className="text-primary-700 dark:text-white" />
+                <Link to="/" className="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors">
+                    <FaArrowLeft className="text-gray-600" />
                 </Link>
-                <h1 className="text-xl font-bold text-primary-700 dark:text-white">Your Statistics</h1>
+                <h1 className="text-xl font-bold text-gray-900">Your Statistics</h1>
             </div>
 
             {/* Weekly Overview */}
@@ -102,7 +73,7 @@ const Stats = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="card mb-6"
             >
-                <h3 className="font-semibold text-primary-700 dark:text-white mb-4 flex items-center gap-2">
+                <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <FaCalendar className="text-primary-500" />
                     This Week
                 </h3>
@@ -112,7 +83,7 @@ const Stats = () => {
                             key={idx}
                             className={`text-center p-2 rounded-xl ${day.isToday
                                 ? 'bg-primary-500 text-white'
-                                : 'bg-gray-50 text-primary-700 dark:text-white'
+                                : 'bg-gray-50 text-gray-600'
                                 }`}
                         >
                             <div className="text-xs font-medium mb-1">{day.dayName}</div>
@@ -160,8 +131,8 @@ const Stats = () => {
                     className="card"
                 >
                     <FaClock className="text-xl mb-2 text-primary-500" />
-                    <div className="text-2xl font-bold">{stats.totalTasks}</div>
-                    <div className="text-sm text-primary-500 dark:text-gray-300">Active Reminders</div>
+                    <div className="text-2xl font-bold">{stats.totalActiveTasks}</div>
+                    <div className="text-sm text-gray-500">Active Reminders</div>
                 </motion.div>
 
                 <motion.div
@@ -170,14 +141,9 @@ const Stats = () => {
                     transition={{ delay: 0.25 }}
                     className="card"
                 >
-                    <div className="relative mb-2">
-                        <FaClock className="text-xl text-primary-500" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-xs font-bold text-primary-500">{getCompletionRate()}%</span>
-                        </div>
-                    </div>
-                    <div className="text-2xl font-bold">{getCompletionRate()}%</div>
-                    <div className="text-sm text-primary-500 dark:text-gray-300">Completion Rate</div>
+                    <FaCheckCircle className="text-xl mb-2 text-primary-500" />
+                    <div className="text-2xl font-bold">{stats.completionRate}%</div>
+                    <div className="text-sm text-gray-500">Completion Rate</div>
                 </motion.div>
             </div>
 
@@ -188,16 +154,16 @@ const Stats = () => {
                 transition={{ delay: 0.3 }}
                 className="card mb-6"
             >
-                <h3 className="font-semibold text-primary-700 dark:text-white mb-4">Reminder Types</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">Reminder Types</h3>
                 {typeDistribution.length === 0 ? (
-                    <p className="text-primary-500 dark:text-gray-300 text-center py-4">No reminders yet</p>
+                    <p className="text-gray-500 text-center py-4">No reminders yet</p>
                 ) : (
                     <div className="space-y-4">
                         {typeDistribution.map((item, idx) => (
                             <div key={idx}>
                                 <div className="flex items-center justify-between mb-1">
-                                    <span className="text-sm font-medium text-primary-700 dark:text-white">{item.type}</span>
-                                    <span className="text-sm text-primary-500 dark:text-gray-300">{item.count} ({item.percentage}%)</span>
+                                    <span className="text-sm font-medium text-gray-700">{item.type}</span>
+                                    <span className="text-sm text-gray-500">{item.count} ({item.percentage}%)</span>
                                 </div>
                                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                                     <motion.div
@@ -220,7 +186,7 @@ const Stats = () => {
                 transition={{ delay: 0.4 }}
                 className="card"
             >
-                <h3 className="font-semibold text-primary-700 dark:text-white mb-4">Quick Actions</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">Quick Actions</h3>
                 <div className="space-y-3">
                     <Link
                         to="/add-task"
@@ -230,8 +196,8 @@ const Stats = () => {
                             <FaCheckCircle />
                         </div>
                         <div className="flex-1">
-                            <div className="font-medium text-primary-700 dark:text-white">Add New Reminder</div>
-                            <div className="text-sm text-primary-500 dark:text-gray-300">Create a new reminder</div>
+                            <div className="font-medium text-gray-900">Add New Reminder</div>
+                            <div className="text-sm text-gray-500">Create a new reminder</div>
                         </div>
                     </Link>
                 </div>
