@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Use VITE_API_URL environment variable - always points to Render backend
+// No localhost, no fallback - forces production URL only
 const api = axios.create({
-    baseURL: '/api', // Proxy in vite config handles localhost:5000
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true,
 });
 
 // Add a request interceptor to add the token

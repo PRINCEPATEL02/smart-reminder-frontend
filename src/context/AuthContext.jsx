@@ -70,6 +70,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
+            console.log('Attempting login to:', api.defaults.baseURL);
             const { data } = await api.post('/auth/login', { email, password });
 
             // Store user data securely
@@ -89,7 +90,15 @@ export const AuthProvider = ({ children }) => {
             toast.success('Logged in successfully');
             return true;
         } catch (error) {
-            const message = error.response?.data?.message || 'Login failed';
+            // Log full error details for debugging
+            console.error('=== LOGIN ERROR DEBUG ===');
+            console.error('Error message:', error.message);
+            console.error('Error response status:', error.response?.status);
+            console.error('Error response data:', error.response?.data);
+            console.error('Error config:', error.config);
+            console.error('=========================');
+
+            const message = error.response?.data?.message || error.message || 'Login failed';
             toast.error(message);
             return false;
         }
